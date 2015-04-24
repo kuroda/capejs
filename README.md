@@ -2,13 +2,26 @@
 
 ![Cape.JS logo](https://cdn.rawgit.com/oiax/capejs/logo1/doc/logo/capejs.svg)
 
-Cape.JS is a lightweight Javascript UI framework based on [virtual-dom](https://github.com/Matt-Esch/virtual-dom) of Matt-Esch.
+Cape.JS is a lightweight JavaScript UI framework with following features:
 
-* **Small but full stack:** Cape.JS is consists of three basic but powerful classes; *Component, DataStore,* and *Router.* You can utilize them to create web widgets and single-page applications (SPAs).
-* **Virtual DOM:** Cape.JS takes advantage of [virtual-dom](https://github.com/Matt-Esch/virtual-dom) for high performance UI rendering. You don't have to rely on *jQuery* for DOM manipulation anymore.
-* **Concise syntax:** The *markup builder* helps you to construct HTML DOM trees with its simple, easy to learn syntax. You can add a `div` element by calling markup builder's `div` method, for example.
+* **Full stack:** You can build *single-page applications* (SPAs) with Cape.JS.
+* **Modular:** You can place *web widgets* built by Cape.JS to your static web sites.
+* **Virtual DOM:** Cape.JS takes advantage of
+[virtual-dom](https://github.com/Matt-Esch/virtual-dom) <i class="fa fa-external-link"></i>
+of Matt-Esch for high performance rendering.
+* **Markup builder:** The *markup builder* helps you to construct HTML DOM trees
+with its simple, easy to learn syntax.
+* **Form manipulation:** You can get or set the value of form fields
+without [jQuery](https://jquery.com/) <i class="fa fa-external-link"></i>.
+* **Data stores:** Using *data stores*, you can build web applications
+with *unidirectional data flow.*
+* **Router:** You can define *routes* with a DSL (domain specific language)
+similar to that of Ruby on Rails.
 
-The architecture and terminology of Cape.JS are strongly influenced by [React](https://github.com/facebook/react),  [Riot](https://github.com/muut/riotjs) and [Ruby on Rails](https://github.com/rails/rails).
+The architecture and terminology of Cape.JS are strongly influenced by
+[React](https://github.com/facebook/react) <i class="fa fa-external-link"></i>,
+[Riot](https://github.com/muut/riotjs) <i class="fa fa-external-link"></i>
+and [Ruby on Rails](https://github.com/rails/rails) <i class="fa fa-external-link"></i>.
 
 ## Examples
 
