@@ -2,16 +2,17 @@
 
 describe('ResourceAgent', function() {
   describe('constructor', function() {
-    it('should take its client as the first argument', function() {
+    it('should take resource name and its client as arguments', function() {
       var form, agent;
 
       form = { id: 123 };
       agent = new Cape.ResourceAgent('user', form);
 
+      expect(agent.resourceName).to.equal('user');
       expect(agent.client).to.equal(form);
     })
 
-    it('should take an object (options) as the second argument', function() {
+    it('should take an object (options) as the third argument', function() {
       var form, options, agent;
 
       form = { id: 123 };
@@ -49,9 +50,9 @@ describe('ResourceAgent', function() {
       form = { id: 123 };
       agent = new Cape.ResourceAgent('user', form);
 
-      spy1 = sinon.spy()
-      spy2 = sinon.spy()
-      spy3 = sinon.spy()
+      spy1 = sinon.spy();
+      spy2 = sinon.spy();
+      spy3 = sinon.spy();
       sinon.stub(global, 'fetch', function(path, options) {
         return {
           then: function(callback1) {
