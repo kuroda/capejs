@@ -1,5 +1,26 @@
 "use strict";
 
+function stubFetchAPI(spy, data) {
+  data = data || {};
+  sinon.stub(global, 'fetch', function(path, options) {
+    return {
+      then: function(callback1) {
+        callback1.call(this, { json: spy });
+        return {
+          then: function(callback2) {
+            callback2.call(this, data);
+            return {
+              catch: function(callback3) {
+                callback3.call(this, new Error(''));
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 describe('CollectionAgent', function() {
   describe('constructor', function() {
     it('should take resource name as the first argument', function() {
@@ -80,23 +101,7 @@ describe('CollectionAgent', function() {
       spy1 = sinon.spy();
       spy2 = sinon.spy();
       spy3 = sinon.spy();
-      sinon.stub(global, 'fetch', function(path, options) {
-        return {
-          then: function(callback1) {
-            callback1.call(this, { json: spy1 })
-            return {
-              then: function(callback2) {
-                callback2.call(this, { users: {} })
-                return {
-                  catch: function(callback3) {
-                    callback3.call(this, new Error(''))
-                  }
-                }
-              }
-            }
-          }
-        }
-      });
+      stubFetchAPI(spy1);
 
       agent.ajax('GET', '/users', { page: 1, per_page: 20 }, spy2, spy3);
       expect(spy1.called).to.be.true;
@@ -118,23 +123,7 @@ describe('CollectionAgent', function() {
       spy1 = sinon.spy();
       spy2 = sinon.spy();
       spy3 = sinon.spy();
-      sinon.stub(global, 'fetch', function(path, options) {
-        return {
-          then: function(callback1) {
-            callback1.call(this, { json: spy1 })
-            return {
-              then: function(callback2) {
-                callback2.call(this, { user: {} })
-                return {
-                  catch: function(callback3) {
-                    callback3.call(this, new Error(''))
-                  }
-                }
-              }
-            }
-          }
-        }
-      });
+      stubFetchAPI(spy1);
 
       agent.ajax('POST', '/users', { name: 'X', password: 'Y' }, spy2, spy3);
       expect(spy1.called).to.be.true;
@@ -154,23 +143,7 @@ describe('CollectionAgent', function() {
       spy1 = sinon.spy();
       spy2 = sinon.spy();
       spy3 = sinon.spy();
-      sinon.stub(global, 'fetch', function(path, options) {
-        return {
-          then: function(callback1) {
-            callback1.call(this, { json: spy1 })
-            return {
-              then: function(callback2) {
-                callback2.call(this, { user: {} })
-                return {
-                  catch: function(callback3) {
-                    callback3.call(this, new Error(''))
-                  }
-                }
-              }
-            }
-          }
-        }
-      });
+      stubFetchAPI(spy1);
 
       agent.ajax('POST', '/users', { name: 'X', password: 'Y' }, spy2, spy3);
       expect(spy1.called).to.be.true;
@@ -178,6 +151,21 @@ describe('CollectionAgent', function() {
       expect(spy3.called).to.be.true;
       expect(agent.refresh.called).to.be.false;
 
+      global.fetch.restore();
+    })
+  })
+
+  describe('#refresh', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy1, spy2, spy3;
+
+      spy1 = sinon.spy();
+      stubFetchAPI(spy1, { users: [ {}, {} ] });
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.refresh();
+      expect(spy1.called).to.be.true;
+      expect(agent.objects.length).to.equal(2);
       global.fetch.restore();
     })
   })
