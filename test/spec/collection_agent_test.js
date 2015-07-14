@@ -55,6 +55,54 @@ describe('CollectionAgent', function() {
   })
 
 
+  describe('attach', function() {
+    it('should register the given object as a target of propagation', function() {
+      var agent, component1, component2;
+
+      agent = new Cape.CollectionAgent('users');
+
+      component1 = { refresh: sinon.spy() };
+      component2 = { refresh: sinon.spy() };
+
+      agent.attach(component1);
+      agent.attach(component2);
+      agent.propagate();
+      expect(component1.refresh.called).to.be.true;
+      expect(component2.refresh.called).to.be.true;
+    })
+
+    it('should not register the same object twice', function() {
+      var Klass, agent, component;
+
+      agent = new Cape.CollectionAgent('users');
+
+      component = { refresh: sinon.spy() }
+
+      agent.attach(component);
+      expect(agent._.components.length).to.eq(1);
+    })
+  })
+
+  describe('detach', function() {
+    it('should unregister the given object as a target of propagation', function() {
+      var component1, component2, component3, agent;
+
+      component1 = { refresh: sinon.spy() }
+      component2 = { refresh: sinon.spy() }
+      component3 = { refresh: sinon.spy() }
+
+      agent = new Cape.CollectionAgent('users');
+      agent.attach(component1);
+      agent.attach(component2);
+      agent.attach(component3);
+      agent.detach(component2);
+      agent.propagate();
+      expect(component1.refresh.called).to.be.true;
+      expect(component2.refresh.called).not.to.be.true;
+      expect(component3.refresh.called).to.be.true;
+    })
+  })
+
   describe('#collectionPath', function() {
     it('should return standard values', function() {
       var agent;
@@ -235,6 +283,20 @@ describe('CollectionAgent', function() {
       agent = new Cape.CollectionAgent('users');
       sinon.stub(agent, 'defaultErrorHandler');
       agent.destroy(1);
+      expect(spy.called).to.be.true;
+      global.fetch.restore();
+    })
+  })
+
+  describe('#put', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.put('suspend', 1, { name: 'X', password: 'Y' });
       expect(spy.called).to.be.true;
       global.fetch.restore();
     })
