@@ -157,7 +157,7 @@ describe('CollectionAgent', function() {
 
   describe('#refresh', function() {
     it('should go through a fetch api chain', function() {
-      var agent, spy1, spy2, spy3;
+      var agent, spy1;
 
       spy1 = sinon.spy();
       stubFetchAPI(spy1, { users: [ {}, {} ] });
@@ -166,6 +166,20 @@ describe('CollectionAgent', function() {
       agent.refresh();
       expect(spy1.called).to.be.true;
       expect(agent.objects.length).to.equal(2);
+      global.fetch.restore();
+    })
+  })
+
+  describe('#index', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.index({ page: 1, per_page: 20 });
+      expect(spy.called).to.be.true;
       global.fetch.restore();
     })
   })
