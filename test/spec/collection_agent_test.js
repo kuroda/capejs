@@ -288,17 +288,48 @@ describe('CollectionAgent', function() {
     })
   })
 
-  describe('#put', function() {
-    it('should go through a fetch api chain', function() {
-      var agent, spy;
+  describe('#get', function() {
+    it('should call this.ajax() with "GET"', function() {
+      var agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'ajax');
+      agent.get('suspended', null);
+      expect(agent.ajax.calledWith('GET', '/users/suspended')).to.be.true;
+    })
+  })
 
-      spy = sinon.spy();
-      stubFetchAPI(spy);
-      agent = new Cape.CollectionAgent('users');
-      sinon.stub(agent, 'defaultErrorHandler');
+  describe('#post', function() {
+    it('should call this.ajax() with "POST"', function() {
+      var agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'ajax');
+      agent.post('tags', 1, { tags: [ 'A', 'B' ] });
+      expect(agent.ajax.calledWith('POST', '/users/1/tags')).to.be.true;
+    })
+  })
+
+  describe('#patch', function() {
+    it('should call this.ajax() with "PATCH"', function() {
+      var agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'ajax');
+      agent.patch('suspend', 1, { name: 'X', password: 'Y' });
+      expect(agent.ajax.calledWith('PATCH', '/users/1/suspend')).to.be.true;
+    })
+  })
+
+  describe('#put', function() {
+    it('should call this.ajax() with "PUT"', function() {
+      var agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'ajax');
       agent.put('suspend', 1, { name: 'X', password: 'Y' });
-      expect(spy.called).to.be.true;
-      global.fetch.restore();
+      expect(agent.ajax.calledWith('PUT', '/users/1/suspend')).to.be.true;
+    })
+  })
+
+  describe('#delete', function() {
+    it('should call this.ajax() with "DELETE"', function() {
+      var agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'ajax');
+      agent.delete('tags', 1);
+      expect(agent.ajax.calledWith('DELETE', '/users/1/tags')).to.be.true;
     })
   })
 })
