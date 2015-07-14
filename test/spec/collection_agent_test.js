@@ -183,4 +183,60 @@ describe('CollectionAgent', function() {
       global.fetch.restore();
     })
   })
+
+  describe('#show', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.show(1);
+      expect(spy.called).to.be.true;
+      global.fetch.restore();
+    })
+  })
+
+  describe('#create', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.create({ name: 'X', password: 'Y' });
+      expect(spy.called).to.be.true;
+      global.fetch.restore();
+    })
+  })
+
+  describe('#update', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.update(1, { name: 'X', password: 'Y' });
+      expect(spy.called).to.be.true;
+      global.fetch.restore();
+    })
+  })
+
+  describe('#destroy', function() {
+    it('should go through a fetch api chain', function() {
+      var agent, spy;
+
+      spy = sinon.spy();
+      stubFetchAPI(spy);
+      agent = new Cape.CollectionAgent('users');
+      sinon.stub(agent, 'defaultErrorHandler');
+      agent.destroy(1);
+      expect(spy.called).to.be.true;
+      global.fetch.restore();
+    })
+  })
 })
