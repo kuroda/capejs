@@ -307,6 +307,45 @@ describe('Component', function() {
       expect(component.val('book.author/tags/0/value')).to.equal('S');
       expect(component.val('book.comments/1/body')).to.equal('Y');
     })
+
+    it('should not change other forms', function() {
+      var Klass, component, div, form;
+
+      Klass = Cape.createComponentClass({
+        init: function() { this.mode = 'foo'; },
+        render: function(m) {
+          if (this.mode === 'foo')
+            m.formFor('foo', function(m) {
+              m.textField('title');
+              m.checkBox('published');
+            });
+          else
+            m.formFor('bar', function(m) {
+              m.textField('title');
+              m.checkBox('published');
+            });
+        }
+      })
+
+      component = new Klass();
+      component.mount('target');
+      component.val('foo.title', 'X');
+      component.val('foo.published', true);
+      component.refresh();
+
+      div = document.getElementById('target');
+      form = div.getElementsByTagName('form')[0];
+      expect(form.name).to.equal('foo');
+      expect(form.getElementsByTagName('input')[0].value).to.equal('X');
+      expect(form.getElementsByTagName('input')[2].checked).to.be.true;
+
+      component.mode = 'bar';
+      component.refresh();
+      form = div.getElementsByTagName('form')[0];
+      expect(form.name).to.equal('bar');
+      expect(div.getElementsByTagName('input')[0].value).to.equal('');
+      expect(form.getElementsByTagName('input')[2].checked).to.be.false;
+    })
   })
 
   describe('setValues', function() {
@@ -427,6 +466,7 @@ describe('Component', function() {
       expect(params.title).to.equal('A');
       expect(params.name).to.equal('B');
     })
+
     it('should return array of values when the name of checkbox has "[]" in the end', function() {
       var Klass, component, params;
 
@@ -447,6 +487,7 @@ describe('Component', function() {
       expect(params.types[0]).to.equal('a');
       expect(params.types[1]).to.equal('b');
     })
+
     it('should return string when the name of checkbox does not have "[]" in the end', function() {
       var Klass, component, params;
 
