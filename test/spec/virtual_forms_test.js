@@ -15,7 +15,7 @@ describe('VirtualForms', function() {
   })
 
   describe('val', function() {
-    it('should get the value of a form field', function() {
+    it('should get the value of a form field xxx', function() {
       var Klass, component;
 
       Klass = Cape.createComponentClass({
@@ -90,11 +90,13 @@ describe('VirtualForms', function() {
       expect(component.val('types[]').length).to.equal(2);
       expect(component.val('tags[]').length).to.equal(0);
 
-      component.val('types', [ 'a', 'c' ]);
+      component.val('types[]', [ 'a', 'c' ]);
       elem = document.getElementById('tag_x');
-      elem.checked = false;
+      elem.checked = true;
 
       component.refresh();
+      elem = document.getElementById('tag_x');
+      expect(elem.checked).to.be.true;
       expect(component.val('types[]').length).to.equal(2);
       expect(component.val('types[]')[1]).to.equal('c');
       expect(component.val('tags[]').length).to.equal(1);
