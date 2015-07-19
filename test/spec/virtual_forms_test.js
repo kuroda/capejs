@@ -65,7 +65,7 @@ describe('VirtualForms', function() {
 
       Klass = Cape.createComponentClass({
         init: function() {
-          this.setValues('', { types: [ 'a', 'b' ] });
+          this.setValues('', { 'types[]': [ 'a', 'b' ] });
           this.refresh();
         },
 
@@ -87,18 +87,18 @@ describe('VirtualForms', function() {
       elem = document.getElementById('type_a');
       expect(elem.checked).to.be.true;
 
-      expect(component.val('types').length).to.equal(2);
-      expect(component.val('tags').length).to.equal(0);
+      expect(component.val('types[]').length).to.equal(2);
+      expect(component.val('tags[]').length).to.equal(0);
 
       component.val('types', [ 'a', 'c' ]);
       elem = document.getElementById('tag_x');
       elem.checked = false;
 
       component.refresh();
-      expect(component.val('types').length).to.equal(2);
-      expect(component.val('types')[1]).to.equal('c');
-      expect(component.val('tags').length).to.equal(1);
-      expect(component.val('tags')[0]).to.equal('x');
+      expect(component.val('types[]').length).to.equal(2);
+      expect(component.val('types[]')[1]).to.equal('c');
+      expect(component.val('tags[]').length).to.equal(1);
+      expect(component.val('tags[]')[0]).to.equal('x');
     })
 
     it('should get the value of a select field', function() {
