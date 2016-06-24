@@ -38,7 +38,9 @@ and [Ruby on Rails](https://github.com/rails/rails).
     * [With npm](#with-npm)
     * [With Bower](#with-bower)
     * [With `capejs-rails` gem](#with-capejs-rails-gem)
-* [A simple example](#a-simple-example)
+* [simple examples](#simple-examples)
+    * [Hello World](#hello-world)
+    * [Generating DOM Tree](#generating-dom-tree)
 * [Router](#router)
 * [ECMAScript 2015 (a.k.a. ES6)](#ecmascript-2015-aka-es6)
 * [Tutorials](#tutorials)
@@ -81,41 +83,75 @@ If you want to integrate Cape.JS with Ruby on Rails, you are recommended to use 
 
 See [capejs/capejs-rails](https://github.com/capejs/capejs-rails) for details.
 
-## A simple example
+## Simple Examples
 
-The following example will insert `<div>Hello, World!</div>` into the `div#hello-message` element.
+### Hello World
 
-`index.html`
+Put following two files on your PC:
+
+`hello_message.html`
 
 ```html
-<h1>Greeting from Cape.JS</h1>
-<div id="hello-message" data-name="World"></div>
-
-<script src="./hello_message.js"></script>
-<script>
-  var component = new HelloMesage()
-  component.mount('hello-message')
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HELLO WORLD</title>
+  <meta charset="UTF-8">
+  <script src="https://cdn.rawgit.com/capejs/capejs/v1.5.1/dist/cape.min.js"></script>
+  <script src="./hello_message.js"></script>
+</head>
+<body>
+  <div id="content"></div>
+</body>
+</html>
 ```
 
 `hello_message.js`
 
 ```javascript
-var HelloMesage = Cape.createComponentClass({
-  render: function(m) {
-    m.div('Hello, ' + this.root.data.name + '!')
+'use strict'
+
+class HelloMessage extends Cape.Component {
+  constructor(name) {
+    super()
+    this.name = name
   }
+
+  render(m) {
+    m.p(`Hello, ${this.name}!`)
+  }
+}
+
+document.addEventListener("DOMContentLoaded", event => {
+  let comp = new HelloMessage('world')
+  comp.mount('content')
 })
 ```
 
-In this example, the `div` method corresponds to the `div` tag of HTML.
-If you replace it with `p`, it inserts `<p>Hello, World!</p>`.
-In this way, you can generate [any HTML5 element](http://www.w3.org/TR/html-markup/elements.html),
-such as `blockquote`, `h1`, `strong`, `video`, etc.
+When you open `hello_message.html` with your browser, you will see the text "Hello, world!" on the screen.
 
-This example is explained in detail
-in the [Hello World](http://capejs.github.io/capejs/components/#hello-world) section
-of *Cape.JS Documentation.*
+### Generating DOM Tree
+
+Edit the `render` method of `HelloMessage` class like this:
+
+```javascript
+  render(m) {
+    m.h1('Greeting')
+    m.class('message').p(m => {
+      m.text('Hello, ')
+      m.em(this.name + '!')
+      m.sp()
+      m.text('My name is Cape.JS.')
+    })
+  }
+```
+
+This generates a DOM tree roughly equivalent to this HTML fragment:
+
+```html
+<h1>Greeting</h1>
+<p class='message'>Hello, <em>world!</em> My name is Cape.JS.</p>
+```
 
 ## Router
 
