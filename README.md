@@ -1,11 +1,11 @@
 # Cape.JS
 
-![Cape.JS logo](https://cdn.rawgit.com/capejs/capejs/master/doc/logo/capejs.svg)
-
 [![Circle CI](https://circleci.com/gh/capejs/capejs.png?style=badge)](https://circleci.com/gh/capejs/capejs)
 [![Npm Version](https://badge.fury.io/js/capejs.svg)](http://badge.fury.io/js/capejs)
 [![Bower Version](https://badge.fury.io/bo/capejs.svg)](http://badge.fury.io/bo/capejs)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+![Cape.JS logo](https://cdn.rawgit.com/capejs/capejs/master/doc/logo/capejs.svg)
 
 Cape.JS is a lightweight JavaScript UI framework with following features:
 
@@ -31,7 +31,21 @@ The architecture and terminology of Cape.JS are strongly influenced by
 [Riot](https://github.com/muut/riotjs)
 and [Ruby on Rails](https://github.com/rails/rails).
 
-If you want to learn about Cape.JS, check out the [Cape.JS Documentation](http://capejs.github.io/capejs/).
+## Table of Contents
+
+* [A simple example](#a-simple-example)
+* [Integration with Rails Asset Pipeline](#integration-with-rails-asset-pipeline)
+* [Router](#router)
+* [ECMAScript 2015 (a.k.a. ES6)](#ecmascript-2015-aka-es6)
+* [Tutorials](#tutorials)
+* [Demo Applications](#demo-applications)
+    * [Greeter](#greeter)
+    * [Todo List](#todo-list)
+* [Browser Support](#browser-support)
+* [Contributing](#contributing)
+* [Acknowledgements](#acknowledgements)
+* [Trademarks](#trademarks)
+* [License](#license)
 
 ## A simple example
 
