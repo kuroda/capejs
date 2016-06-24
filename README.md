@@ -42,7 +42,6 @@ and [Ruby on Rails](https://github.com/rails/rails).
     * [Hello World](#hello-world)
     * [Generating DOM Tree](#generating-dom-tree)
 * [Router](#router)
-* [ECMAScript 2015 (a.k.a. ES6)](#ecmascript-2015-aka-es6)
 * [Tutorials](#tutorials)
 * [Demo Applications](#demo-applications)
     * [Greeter](#greeter)
@@ -161,7 +160,7 @@ similar to that of Ruby on Rails. Here is an example of `routes.js`:
 ```javascript
 var $router = new Cape.Router()
 
-$router.draw(function(m) {
+$router.draw(m => {
   m.root('welcome')
   m.page('login')
   m.page('help')
@@ -178,16 +177,14 @@ $router.navigateTo('help')
 The following is a full example of Component definition:
 
 ```javascript
-var WelcomePage = Cape.createComponentClass({
-  render: function(m) {
-    m.div(function(m) {
-      m.span('Help', {
-        class: 'link',
-        onclick: function(e) { $router.navigateTo('help') }
-      })
+class WelcomePage extends Cape.Component {
+  render(m) {
+    m.div(m => {
+      m.onclick(e => $router.navigateTo('help'))
+        .class('link').span('Help')
     })
   }
-})
+}
 ```
 
 When the user clicks on the "Help" link, the hash fragment of the URL changes
@@ -198,24 +195,6 @@ In the above example, when the user is navigated to the `Help` component,
 the HTML document itself does _not_ get reloaded. The `Help` component is rendered
 by Cape.JS with the assistance of _virtual-dom._
 An apparent _page transition_ happens within a _single_ page in fact.
-
-## ECMAScript 2015 (_a.k.a._ ES6)
-
-If you are familiar with [Babel](https://babeljs.io/), you can write the code above
-more concisely using the ECMAScript 2015 syntax like this:
-
-```javascript
-class WelcomePage extends Cape.Component {
-  render(m) {
-    m.div(m => {
-      m.span('Help', {
-        class: 'link',
-        onclick: e => $router.navigateTo('doc/help')
-      })
-    })
-  }
-}
-```
 
 ## Tutorials
 
