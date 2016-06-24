@@ -33,8 +33,12 @@ and [Ruby on Rails](https://github.com/rails/rails).
 
 ## Table of Contents
 
+* [Installation](#installation)
+    * [Using CDN](#using-cdn)
+    * [With npm](#with-npm)
+    * [With Bower](#with-bower)
+    * [With `capejs-rails` gem](#with-capejs-rails-gem)
 * [A simple example](#a-simple-example)
-* [Integration with Rails Asset Pipeline](#integration-with-rails-asset-pipeline)
 * [Router](#router)
 * [ECMAScript 2015 (a.k.a. ES6)](#ecmascript-2015-aka-es6)
 * [Tutorials](#tutorials)
@@ -46,6 +50,36 @@ and [Ruby on Rails](https://github.com/rails/rails).
 * [Acknowledgements](#acknowledgements)
 * [Trademarks](#trademarks)
 * [License](#license)
+
+## Installation
+
+Cape.JS is available from a variety of sources.
+
+### Using CDN
+
+To include Cape.JS on your web site, add this line to the `<head>` section of your HTML files:
+
+```html
+<script src="//cdn.rawgit.com/capejs/capejs/v1.5.1/dist/cape.min.js"></script>
+```
+
+### With npm
+
+```text
+$ npm install capejs
+```
+
+### With bower
+
+```text
+$ bower install capejs
+```
+
+### With `capejs-rails` gem
+
+If you want to integrate Cape.JS with Ruby on Rails, you are recommended to use `capejs-rails` gem.
+
+See [capejs/capejs-rails](https://github.com/capejs/capejs-rails) for details.
 
 ## A simple example
 
@@ -82,12 +116,6 @@ such as `blockquote`, `h1`, `strong`, `video`, etc.
 This example is explained in detail
 in the [Hello World](http://capejs.github.io/capejs/components/#hello-world) section
 of *Cape.JS Documentation.*
-
-## Integration with Rails Asset Pipeline
-
-If you combile Cape.JS with Ruby on Rails, you are recommended to use `capejs-rails` gem.
-
-See [capejs/capejs-rails](https://github.com/capejs/capejs-rails) for details.
 
 ## Router
 
