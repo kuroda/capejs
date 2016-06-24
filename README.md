@@ -41,6 +41,7 @@ and [Ruby on Rails](https://github.com/rails/rails).
 * [simple examples](#simple-examples)
     * [Hello World](#hello-world)
     * [Generating DOM Tree](#generating-dom-tree)
+* [Handling DOM Events](#handling-dom-events)
 * [Router](#router)
 * [Tutorials](#tutorials)
 * [Demo Applications](#demo-applications)
@@ -151,6 +152,53 @@ This generates a DOM tree roughly equivalent to this HTML fragment:
 <h1>Greeting</h1>
 <p class='message'>Hello, <em>world!</em> My name is Cape.JS.</p>
 ```
+
+## Handling DOM Events
+
+Edit `hello_message.js` as follows and reload your browser:
+
+```javascript
+'use strict'
+
+class HelloMessage extends Cape.Component {
+  constructor(name) {
+    super()
+    this.names = [ 'alice', 'bob', 'charlie' ]
+    this.name = name
+  }
+
+  render(m) {
+    m.h1('Greeting')
+    m.p('Who are you?')
+    m.div(m => {
+      this.names.forEach(name => {
+        m.checked(name === this.name)
+          .onclick(e => { this.name = e.target.value; this.refresh() })
+          .radioButton('name', name)
+        m.sp()
+        m.text(name)
+      })
+    })
+    m.class('message').p(m => {
+      m.text('Hello, ')
+      m.em(this.name + '!')
+      m.sp()
+      m.text('My name is Cape.JS.')
+    })
+  }
+}
+
+document.addEventListener("DOMContentLoaded", event => {
+  let comp = new HelloMessage('alice')
+  comp.mount('content')
+})
+```
+
+You will see three radio buttons and by choosing one of them
+you can change the message text.
+
+Note that `this.refresh()` updates the DOM tree _very quickly_
+using Virtual DOM technology.
 
 ## Router
 
